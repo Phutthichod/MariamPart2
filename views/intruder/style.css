@@ -1,0 +1,20 @@
+.modal-content{
+    background-color: #201c29;
+}
+body{
+    background-color: black;
+    color: white;
+}
+.table-dark{
+    background-color: black;
+    background-color:#201c29;
+    color: #a1a1af;
+}
+th{
+    color: white;
+}
+.grid-operator{
+    display: grid;
+    grid-template-columns: 0.2fr 0.2fr;
+    grid-gap: 1rem;
+}

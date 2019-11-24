@@ -1,0 +1,221 @@
+/* :root{
+    --in-card-body-color:  white;
+  } */
+body{
+    background-color: black;
+    color: white;
+}
+.grid-content .card{
+    background-color:#201c29;
+    color: #a1a1af;
+    
+}
+.grid-main-detail .card{
+    background-color:#201c29;
+    color: #a1a1af;
+    padding: 15px  0 15px 0;
+    
+}
+.grid-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1rem;
+}
+.header-mariam{
+    display: flex;
+    justify-content: flex-start;
+}
+.grid-option{
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr 2fr 1fr 1fr;
+    margin: auto;
+    width: 100%;
+    margin: 10px 0 25px 0;
+    grid-gap: 1rem;
+
+}
+.grid-option-detail{
+    margin-bottom:20px;
+}
+input{
+    color: black;
+}
+
+.grid-card{
+    display: grid;
+    grid-template:
+    "zone zone zone" 1fr
+    "GR GR date" 0.25fr
+    "GR GR time" 0.25fr
+    "GR GR intruder" 0.5fr
+    "edit delete detail" 1fr
+    / 1fr 1fr 4fr;
+}
+.date{
+    justify-self: center;
+    /* margin-left: 10px; */
+    align-self: center;
+    grid-area: date;
+}
+.grid-GR{
+    grid-area: GR;
+    justify-self: center;
+    align-self: center;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+        border-right:1px solid rgb(151, 146, 146);
+    /* font-size:30px; */
+    width: 100%;
+    /* font-weight: 700; */
+    /* color: white; */
+    /* transition: 0.2s ease-in-out; */
+}
+.zone{
+    grid-area: zone;
+    justify-self: center;
+    align-self: center;
+    font-size:30px;
+    font-weight: 700;
+    color: white;
+    transition: 0.2s ease-in-out;
+}
+.detail{
+    grid-area: detail;
+    width: 95%;
+    justify-self: center;
+    align-self: center;
+    padding:5px;
+}
+.intruder{
+    justify-self: center;
+    /* margin-left: 10px; */
+    align-self: center;
+    grid-area: intruder;
+}
+.round{
+    justify-self: center;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* grid-area: round; */
+    /* border-right:1px solid rgb(151, 146, 146); */
+    /* width: 100%;
+    height: 100%; */
+}
+.group{
+    justify-self: center;
+    /* display: flex;
+    flex-direction: column;
+    grid-area: group;
+    border-right:1px solid rgb(151, 146, 146);
+    width: 100%;
+    height: 100%; */
+}
+.edit{
+    grid-area: edit;
+    justify-self: center;
+    align-self: center;
+    padding:5px;
+}
+.time{
+    justify-self: center;
+    /* margin-left: 10px; */
+    align-self: center;
+    grid-area: time;
+}
+.delete{
+    padding:5px;
+    grid-area: delete;
+    justify-self: center;
+    align-self: center;
+}
+.click{
+    cursor: pointer;
+}
+.grid-card .btn-info{
+    width: 100%;
+}
+.round>span{
+    justify-self: center;
+    margin-top: 5px;
+    align-self: center;
+    font-size:20px;
+    font-weight: 700;
+    color: white;
+}
+.group>span{
+    justify-self: flex-start;
+    /* margin-top: 15px; */
+    align-self: center;
+    font-size:18px;
+    font-weight: 700;
+    color: white;
+}
+.btn-info>a{
+    color: white;
+    text-decoration: none;
+}
+.grid-main-detail{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+}
+.grid-content-detail{
+    display: grid;
+    grid-template:
+    "round-detail  time-detail button-detail" 1fr
+    "round-detail  operation-detail button-detail" auto
+    "round-detail list-name button-detail" auto
+    / 0.5fr auto 0.5fr;
+}
+.round-detail{
+    grid-area: round-detail;
+    justify-self: center;
+    align-self: center;
+    font-size:20px;
+    font-weight: 700;
+    color: white;
+}
+.time-detail{
+    align-self: center;
+    grid-area: time-detail;
+}
+.button-detail{
+    display:flex;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    grid-area: button-detail;
+    column-gap: 1rem;
+    margin-bottom: 5px;
+}
+.button-detail .btn{
+    margin-bottom:5px;
+}
+.operation-detail{
+    align-self: center;
+    grid-area: operation-detail;
+}
+.list-name-detail{
+    align-self: center;
+    grid-area: list-name;
+    margin-left: 10px;
+}
+.header-detail{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 25px;
+}
+.modal-content{
+    background-color: #201c29;
+}
+.modal-dialog {
+    max-width: 800px;
+    margin: 1.75rem auto;
+}
+.ui-timepicker-container{ 
+    z-index:1151 !important; 
+}
+.ui-menu-item{
+    height: auto;
+}
