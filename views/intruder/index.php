@@ -15,23 +15,39 @@
                 <th scope="col">#</th>
                 <th scope="col">ชื่อ</th>
                 <th scope="col">นามสกุล</th>
-                <th scope="col">การดำเนินการ</th>
+                <th scope="col">ประวัติการบุกรุก</th>
                 </tr>
             </thead>
             <tbody>
-                <?php $i = 1; foreach($this->data as $row){ ?>
+                <?php $i = 1;
+                    $name = '';
+                    $lname = '';
+                 foreach($this->data as $row){ 
+                   
+                    if($row['firstname'] != $name || $lname != $row['lastname']){
+                        $name = $row['firstname'];
+                        $lname = $row['lastname'];
+                    ?>
                 <tr>
                 <th scope="row"><?php echo $i; ?></th>
                 <td><?php echo $row['firstname'];?></td>
                 <td><?php echo $row['lastname'];?></td>
                 <td>
-                    <div class="grid-operator">
-                        <button class="btn btn-warning">แก้ไข</button>
+                        <?php $j = 0;  foreach($this->data as $row2){
+                            
+                            if($row['firstname'] == $row2['firstname'] && $row2['lastname'] == $row['lastname']){
+                                if($j != 0) echo " ,";
+                                echo $row2['id_intruder_group'];
+                                $j++;
+                            }
+                        }?>
+                    <!-- <div class="grid-operator">
+                        <button class="btn btn-warning btn-edit" id = "<?php echo $row['id'];?>">แก้ไข</button>
                         <button class="btn btn-danger">ลบ</button>
-                    </div>
+                    </div> -->
                 </td>
                 </tr>
-                <?php $i++;} ?>
+                <?php $i++;}} ?>
             </tbody>
         </table>
     </div>
