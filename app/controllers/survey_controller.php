@@ -27,11 +27,12 @@
             $this->model->insertRound($round,$startTime,$endTime);
         }
         public function updateRound(){
+            $id = $_POST['id'];
             $roundO = $_POST['roundO'];
             $round = $_POST['round-edit'];
             $startTime = (explode(" ",($_POST['time-edit'][0])))[0].":00";
             $endTime = (explode(" ",($_POST['time-edit'][1])))[0].":00";
-            $this->model->updateRound($roundO,$round,$startTime,$endTime);
+            $this->model->updateRound($round,$startTime,$endTime,$id);
             $this->round();
         }
         public function insertSurvey(){

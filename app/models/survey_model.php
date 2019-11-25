@@ -4,7 +4,7 @@
             parent::__construct();
         }
         public function insertRound($round,$startTime,$endTime){
-            $sql = "INSERT INTO `roundOfSurvey`(`id`,`start`,`end`) VALUE($round,'$startTime','$endTime')";
+            $sql = "INSERT INTO `roundOfSurvey`(`value`,`start`,`end`) VALUE($round,'$startTime','$endTime')";
             $this->db->insert($sql);
             header("Location: http://localhost/db_029/?controller=survey&action=round");
         }
@@ -12,9 +12,11 @@
             $sql = "SELECT * FROM `roundOfSurvey`";
             return $this->db->select($sql);
         }
-        public function updateRound($roundO,$round,$startTime,$endTime){
-            $sql = "UPDATE `roundOfSurvey` SET `id` = $round, `start` = '$startTime', `end` = '$endTime' WHERE `id` = $roundO";
+        public function updateRound($round,$startTime,$endTime,$id){
+            $sql = "UPDATE `roundOfSurvey` SET `value` = $round, `start` = '$startTime', `end` = '$endTime' WHERE `id` = $id";
             $this->db->update($sql);
+            header("Location: http://localhost/db_029/?controller=survey&action=round");
+        
         }
         public function getZone(){
             $sql = "SELECT *  FROM `zone`";
@@ -36,10 +38,11 @@
             header("Location: http://localhost/db_029/?controller=survey&action=index");
         }
         public function getData(){
-            $sql = "SELECT COUNT(`intruder_group`.`id`) as `amountI`,`survey_round`.`id`  as `id_SR`,`date`,`id_round`,`id_group_staff`,`survey_of_zone`.`id` as `id_SZ`,`survey_of_zone`.`time` as `time_SZ`,`zone`.`id_zone`,`id_survey_round`,`general_condition`,`distace`,`area`,`name`
+            $sql = "SELECT `value`,COUNT(`intruder_group`.`id`) as `amountI`,`survey_round`.`id`  as `id_SR`,`date`,`id_round`,`group_staff`.`name` As `GN`,`group_staff`.`id_group_staff` AS `GI`,`survey_of_zone`.`id` as `id_SZ`,`survey_of_zone`.`time` as `time_SZ`,`zone`.`id_zone`,`id_survey_round`,`general_condition`,`distace`,`area`,`zone`.`name` AS `ZN`
             FROM `survey_round` join `survey_of_zone` 
                        on (`survey_round`.`id` = `survey_of_zone`.`id_survey_round`) join `zone`
                        on (`zone`.`id_zone`=`survey_of_zone`.`id_zone`) left join `intruder_group` on (`intruder_group`.`id_survey_of_zone` = `survey_of_zone`.`id`)
+                       join `group_staff` on (`group_staff`.`id_group_staff` = `survey_round`.`id_group_staff`) join `roundOFSurvey` on (`roundOfSurvey`.`id` = `survey_round`.`id_round`)
                        GROUP BY `survey_of_zone`.`id`";
             return $this->db->select($sql);
         }
@@ -85,8 +88,10 @@
                 $this->db->delete($sql);
             }
             foreach($fname as $key => $value){
-                $sql = "INSERT INTO `intruder`(`firstname`,`lastname`,`id_intruder_group`) VALUE('$value',"."'$lname[$key]'".",$id)";
-                $this->db->insert($sql);
+                if($fname!=""||$lname[$key]!=""){
+                  $sql = "INSERT INTO `intruder`(`firstname`,`lastname`,`id_intruder_group`) VALUE('$value',"."'$lname[$key]'".",$id)";
+                 $this->db->insert($sql);  
+                }
             }
             
             header("Location: http://localhost/db_029/?controller=survey&action=detail&zone=$zone&id=$id_zone&idRound=$idR");

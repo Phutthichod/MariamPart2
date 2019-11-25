@@ -24,18 +24,18 @@
             <div class="card">
                 <div class="card-body">
                     <div class="grid-item">
-                        <div class="number click">
-                            <?php echo $row['id_group_staff']; ?>
+                        <div class="number click" >
+                            <?php echo $row['GN']; ?>
                         </div>
                         <div class="main click">
                             <ul>
                                 <?php foreach($this->nameS as $rowIn) { 
                                       if($rowIn['id_group_staff'] == $row['id_group_staff']){ ?>
-                                        <li id=<?php echo $rowIn['id_staff']; ?>><?php echo $rowIn['name']." ".$rowIn['lname']; ?></li>
+                                        <li id=<?php echo $rowIn['id_staff']; ?>><?php echo $rowIn['SN']." ".$rowIn['lname']; ?></li>
                                 <?php } }?>
                             </ul>
                         </div>
-                        <button class="btn btn-warning edit" data-toggle="modal" data-target="#updateModal">แก้ไข</button>
+                        <button class="btn btn-warning edit" id = <?php echo $row['id_group_staff']; ?> data-toggle="modal" data-target="#updateModal">แก้ไข</button>
                         <button class="btn btn-danger delete">ลบ</button>
                     </div>
                 </div>
@@ -61,16 +61,16 @@
                 <div class="form-group">
                     <div class="form-inline">
                         <label class="col-4" for="inlineFormCustomSelect">ชื่อกลุ่ม</label>
-                        <input type="text" name="name-group" class="form-control col-6">
+                        <input type="text" name="name-group" class="form-control col-6" placeholder="ชื่อกลุ่ม" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-inline">
                         <label class="col-4" for="inlineFormCustomSelect">เจ้าหน้าที่คนที่ 1</label>
                         <select class="custom-select col-6 select1" name="id-staff[]" id="inlineFormCustomSelect">
-                            <option selected>Choose...</option>
+                            <option selected>เลือกเจ้าหน้าที่</option>
                             <?php foreach($this->staff as $row) { ?>
-                            <option value="<?php echo $row['id_staff'];?>"><?php echo $row['name']." ".$row['lname']; ?>/option>
+                            <option value="<?php echo $row['id_staff'];?>"><?php echo $row['name']." ".$row['lname']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -79,7 +79,7 @@
                     <div class="form-inline">
                         <label class="col-4" for="inlineFormCustomSelect">เจ้าหน้าที่คนที่ 2</label>
                         <select class="custom-select col-6 select2" name="id-staff[]" id="inlineFormCustomSelect">
-                            <option selected>Choose...</option>
+                            <option selected>เลือกเจ้าหน้าที่</option>
                             <?php foreach($this->staff as $row) { ?>
                             <option value="<?php echo $row['id_staff'];?>"><?php echo $row['name']." ".$row['lname']; ?></option>
                             <?php } ?>
@@ -90,7 +90,7 @@
                     <div class="form-inline">
                         <label class="col-4" for="inlineFormCustomSelect">เจ้าหน้าที่คนที่ 3</label>
                         <select class="custom-select col-6 select3" name="id-staff[]" id="inlineFormCustomSelect">
-                            <option selected>Choose...</option>
+                            <option selected>เลือกเจ้าหน้าที่</option>
                             <?php foreach($this->staff as $row) { ?>
                             <option value="<?php echo $row['id_staff'];?>"><?php echo $row['name']." ".$row['lname']; ?></option>
                             <?php } ?>
@@ -161,7 +161,7 @@
                         </select>
                     </div>
                 </div>
-
+                <input type="hidden" name="id">
                 <input type="hidden" name="name-group-old">
            
         </div>
@@ -196,6 +196,7 @@
 
         // set value old
         $('input[name=name-group-old]').val($(this).prev().prev().text().trim());
+        $('input[name=id]').val($(this).attr('id'));
     })
 </script>
 </html>

@@ -20,7 +20,7 @@
             <select class="custom-select " id="select-round">
                 <option value="0" selected>ทุกรอบ</option>
                 <?php foreach($this->round as $row) { ?>
-                <option value="<?php echo $row['id'];?>"><?php echo $row['id']; ?></option>
+                <option value="<?php echo $row['id'];?>"><?php echo $row['value']; ?></option>
                 <?php } ?>
             </select> 
             <select class="custom-select" id="select-zone">
@@ -51,20 +51,20 @@
             <div class="card ">
                 <div class="grid-body grid-card">
                     <div class="zone click" id=<?php echo $row['id_zone']; ?>>
-                        <?php echo $row['name']; ?>
+                        <?php echo $row['ZN']; ?>
                     </div>
                     <div class="date click" value="<?php echo $row['date']; ?>">
                         วันที่ <?php echo $row['date']; ?> 
                     </div>
-                    <div class="time click" value="<?php echo $row['time']; ?>">
+                    <div class="time click" value="<?php echo $row['time_SZ']; ?>">
                         เวลา <?php echo $row['time_SZ']; ?><span> 
                     </div>
                     <div class="grid-GR">    
                         <div class="round click">
-                            <span id =<?php echo $row['id_round']; ?> >รอบที่ <?php echo $row['id_round']; ?> 
+                            <span id =<?php echo $row['id_round']; ?>data=<?php echo $row['value']; ?> >รอบที่ <?php echo $row['value']; ?> 
                         </div>
                         <div class="group click">
-                            <span id = <?php echo $row['id_group_staff']; ?> >กลุ่ม <?php echo $row['id_group_staff']; ?><span>
+                            <span id = <?php echo $row['GI']; ?> data = <?php echo $row['GN']; ?>>กลุ่ม <?php echo $row['GN']; ?><span>
                         </div>
                     </div>
                    
@@ -78,7 +78,7 @@
                         <button class="btn btn-danger">ลบ</button>
                     </div>
                     <div class="detail">
-                        <button class="btn btn-info"><a href="?controller=survey&action=detail&zone=<?php echo $row['name']; ?>&idRound=<?php echo $row['id_round'];?>&id=<?php echo $row['id_SZ']; ?>">
+                        <button class="btn btn-info"><a href="?controller=survey&action=detail&zone=<?php echo $row['ZN']; ?>&idRound=<?php echo $row['id_round'];?>&id=<?php echo $row['id_SZ']; ?>">
                         รายละเอียด</a></button>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                         <select id="select2" name="round" class="custom-select col-4" id="inlineFormCustomSelect">
                             <option selected>Choose...</option>
                             <?php foreach($this->round as $row) { ?>
-                            <option value="<?php echo $row['id'];?>"><?php echo $row['id']; ?></option>
+                            <option value="<?php echo $row['id'];?>"><?php echo $row['value']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -132,7 +132,7 @@
                         <select id="select3" name="staff" class="custom-select col-4" id="inlineFormCustomSelect">
                             <option selected>Choose...</option>
                             <?php foreach($this->staff as $row) { ?>
-                            <option value="<?php echo $row['id_group_staff'];?>"><?php echo $row['id_group_staff']; ?></option>
+                            <option value="<?php echo $row['id_group_staff'];?>"><?php echo $row['name']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -190,7 +190,7 @@
                         <select id="select5" name="round-edit" class="custom-select col-4" >
                             <option selected>Choose...</option>
                             <?php foreach($this->round as $row) { ?>
-                            <option value="<?php echo $row['id'];?>"><?php echo $row['id']; ?></option>
+                            <option value="<?php echo $row['id'];?>"><?php echo $row['value']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -201,7 +201,7 @@
                         <select id="select6" name="staff-edit" class="custom-select col-4" >
                             <option selected>Choose...</option>
                             <?php foreach($this->staff as $row) { ?>
-                            <option value="<?php echo $row['id_group_staff'];?>"><?php echo $row['id_group_staff']; ?></option>
+                            <option value="<?php echo $row['id_group_staff'];?>"><?php echo $row['name']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -259,9 +259,9 @@
             $('input[name=id_SR]').val($(this).attr('id_SR'));
             $('#select4').children().first().text($(this).parent().parent().children().first().text());
             $('#select4').children().first().val($(this).parent().parent().children().first().attr('id'));
-            $('#select5').children().first().text($(this).parent().parent().children().next().next().next().children().first().children().attr('id'));
+            $('#select5').children().first().text($(this).parent().parent().children().next().next().next().children().first().children().attr('data'));
             $('#select5').children().first().val($(this).parent().parent().children().next().next().next().children().first().children().attr('id'));
-            $('#select6').children().first().text($(this).parent().parent().children().next().next().next().children().first().next().children().attr('id'));
+            $('#select6').children().first().text($(this).parent().parent().children().next().next().next().children().first().next().children().attr('data'));
             $('#select6').children().first().val($(this).parent().parent().children().next().next().next().children().first().next().children().attr('id'));
             $('input[name=date-edit]').val($(this).parent().parent().children().first().next().attr('value'));
             $('input[name=time-edit]').val($(this).parent().parent().children().first().next().next().attr('value'));

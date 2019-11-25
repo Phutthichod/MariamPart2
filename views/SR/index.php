@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="header-mariam"><h1>Survey</h1></div>
+        <div class="header-mariam"><h1>รอบการออกตรวจ</h1></div>
         <div class="grid-option">
             <div></div> <!-- //สร้างหลอกไว้ -->
             <button class="btn btn-info"><?php echo sizeOf($this->data); ?> รอบ</button>
@@ -22,8 +22,8 @@
         <?php foreach($this->data as $row) { ?>
             <div class="card ">
                 <div class="grid-body grid-card">
-                    <div class="zone click" id="<?php echo $row['id']; ?>">
-                        รอบที่ <?php echo $row['id']; ?>
+                    <div class="zone click" id="<?php echo $row['id'];?>" data=<?php echo $row['value']; ?> >
+                        รอบที่ <?php echo $row['value']; ?>
                     </div>
                     <div class="time click">
                         เวลา  <?php $start = explode(":",$row['start']);
@@ -58,22 +58,22 @@
                 <div class="form-group">
                     <div class="form-inline">
                         <label class="col-4" for="inlineFormCustomSelect">ระบุรอบ</label>
-                        <input type="number" name="round-edit" class="form-control col-5">
+                        <input type="number" id="name-edit" name="round-edit" class="form-control col-5">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-inline">
                         <label class="col-4" for="inlineFormCustomSelect">เวลาเริ่มต้น</label>
-                        <input type="text" name="time-edit[]" class="timepicker form-control col-5">
+                        <input type="text" name="time-edit[]" id="start-edit" class="timepicker form-control col-5">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-inline">
                         <label class="col-4" for="inlineFormCustomSelect">เวลาสิ้นสุด</label>
-                        <input type="text" name="time-edit[]" class="timepicker form-control col-5">
+                        <input type="text" name="time-edit[]" id="end-edit" class="timepicker form-control col-5">
                     </div>
                 </div>
-                <input type="hidden" name="roundO">
+                <input type="hidden" name="id">
             
         </div>
         <div class="modal-footer">
@@ -101,7 +101,7 @@
                 <div class="form-group">
                     <div class="form-inline">
                         <label class="col-4" for="inlineFormCustomSelect">ระบุรอบ</label>
-                        <input type="number" name="round" class="form-control col-5">
+                        <input type="number" name="round" class="form-control col-5" placeholder="รอบที่">
                     </div>
                 </div>
                 <div class="form-group">
@@ -116,7 +116,7 @@
                         <input type="text" name="time[]" class="timepicker form-control col-5">
                     </div>
                 </div>
-                
+               
             
         </div>
         <div class="modal-footer">
@@ -152,10 +152,11 @@
             scrollbar: true
         });
         $(document).on('click','.btn-edit',function(){
-            $("input[name='round-edit']").val($(this).parent().prev().prev().attr('id'));
+            $("#name-edit").val($(this).parent().prev().prev().attr('data'));
+            $("input[name='id']").val($(this).parent().prev().prev().attr('id'));
             // console.log($(this).prev().prev().val());
-            $("input[name='start-edit']").val(($(this).parent().attr('start'))+" AM");
-            $("input[name='end-edit']").val(($(this).parent().attr('end'))+" AM");
+            $("#start-edit").val(($(this).parent().attr('start'))+" AM");
+            $("#end-edit").val(($(this).parent().attr('end'))+" AM");
             $("input[name='roundO']").val($(this).parent().prev().prev().attr('id'))
             // $("input[name='round-edit']").val($(this).parent().prev().prev().attr('id'));
         })

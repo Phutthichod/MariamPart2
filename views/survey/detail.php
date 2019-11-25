@@ -260,18 +260,19 @@
                         
                         i++;
                   }
-              }else{
-                  text+=`
-                        <div class="form-group">
-                            <div class="form-inline">
-                                <label class="col-4" for="inlineFormCustomSelect">รายชื่อผู้บุกรุก</label>
-                                <input type="text" name="fname-edit[]"  class="form-control col-3 mr-2">
-                                <input type="text" name="lname-edit[]"  class="form-control col-3">
-                                <button type="button" class="btn btn-success col-1 ml-2" id="btn-addIntruder">เพิ่ม</button>
-                            </div>
-                        </div>`
-              } 
-            $('.add-element').html(text);
+                  if(Object.keys(idI).length>1) $('.add-element').html(text);
+            //   }else{
+            //       text+=`
+            //             <div class="form-group">
+            //                 <div class="form-inline">
+            //                     <label class="col-4" for="inlineFormCustomSelect">รายชื่อผู้บุกรุก</label>
+            //                     <input class="form-control col-3 mr-2" type="text" name="fname-edit[]" value="" >
+            //                         <input  class="form-control col-3" type="text" name="lname-edit[]" value="" >
+            //                     <button type="button" class="btn btn-success col-1 ml-2" id="btn-addIntruder">เพิ่ม</button>
+            //                 </div>
+            //             </div>`
+            //   } 
+            
             for(i in idI){
                 $('.idI').append(`<input type="hidden" id="idI2" name='idI[]' value=${idI[i]} >`);
             }

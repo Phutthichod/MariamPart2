@@ -17,10 +17,11 @@
         }
         public function update(){
             // print_r($_POST);
+            $id = $_POST['id'];
             $nameG = $_POST['name-group-edit'];
             $nameGO = $_POST['name-group-old'];
             $nameS = $_POST['id-staff-edit'];
-            $this->model->update($nameG,$nameGO,$nameS);
+            $this->model->update($id,$nameG,$nameGO,$nameS);
             $this->index();
         }
     }
