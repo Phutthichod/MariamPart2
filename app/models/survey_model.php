@@ -36,10 +36,11 @@
             header("Location: http://localhost/db_029/?controller=survey&action=index");
         }
         public function getData(){
-            $sql = "SELECT `survey_round`.`id`  as `id_SR`,`amount_intruder`,`date`,`id_round`,`id_group_staff`,`survey_of_zone`.`id` as `id_SZ`,`time`,`zone`.`id_zone`,`id_survey_round`,`general_condition`,`distace`,`area`,`name`
+            $sql = "SELECT COUNT(`intruder_group`.`id`) as `amountI`,`survey_round`.`id`  as `id_SR`,`date`,`id_round`,`id_group_staff`,`survey_of_zone`.`id` as `id_SZ`,`survey_of_zone`.`time` as `time_SZ`,`zone`.`id_zone`,`id_survey_round`,`general_condition`,`distace`,`area`,`name`
             FROM `survey_round` join `survey_of_zone` 
                        on (`survey_round`.`id` = `survey_of_zone`.`id_survey_round`) join `zone`
-                       on (`zone`.`id_zone`=`survey_of_zone`.`id_zone`)";
+                       on (`zone`.`id_zone`=`survey_of_zone`.`id_zone`) left join `intruder_group` on (`intruder_group`.`id_survey_of_zone` = `survey_of_zone`.`id`)
+                       GROUP BY `survey_of_zone`.`id`";
             return $this->db->select($sql);
         }
         public function insertGI($id_zone,$time,$operation,$fname, $lname, $amountI,$zone,$idR){
@@ -52,9 +53,17 @@
             header("Location: http://localhost/db_029/?controller=survey&action=detail&zone=$zone&id=$id_zone&idRound=$idR");
         }
         public function getDataDetail($id){
+            $sql = "SELECT *,COUNT(`intruder`.`id`) as `amount` FROM  `survey_of_zone` join `intruder_group`
+            on (`intruder_group`.`id_survey_of_zone` = `survey_of_zone`.`id`) join `intruder`
+            on (`intruder`.`id_intruder_group` = `intruder_group`.`id`) WHERE `survey_of_zone`.`id` = $id
+            group BY  `intruder_group`.`id` ORDER BY `intruder_group`.`time`" ;
+            return $this->db->select($sql);
+        }
+        public function getDataDetailList($id){
             $sql = "SELECT * FROM  `survey_of_zone` join `intruder_group`
             on (`intruder_group`.`id_survey_of_zone` = `survey_of_zone`.`id`) join `intruder`
-            on (`intruder`.`id_intruder_group` = `intruder_group`.`id`) WHERE `survey_of_zone`.`id` = $id ORDER BY `intruder_group`.`time`" ;
+            on (`intruder`.`id_intruder_group` = `intruder_group`.`id`) WHERE `survey_of_zone`.`id` = $id
+            ORDER BY `intruder_group`.`time`" ;
             return $this->db->select($sql);
         }
         public function getListIntruder($id){
@@ -81,6 +90,28 @@
             }
             
             header("Location: http://localhost/db_029/?controller=survey&action=detail&zone=$zone&id=$id_zone&idRound=$idR");
+        }
+        public function getDataOption($date ,$round,$zone,$group,$intruder){
+            $d = '=';
+            $r = '=';
+            $z = '=';
+            $g = '=';
+            $i = '<=';
+            if($group === '0') $g = '<>';
+            if($date === '0') $d = '<>';
+            if($zone === '0') $z = '<>';
+            if($round === '0') $r = '<>';
+            if($intruder == 0) $i= '>=';
+            if($intruder == 1) $i= '>';
+            $sql = "SELECT COUNT(`intruder_group`.`id`) as `amountI`,`survey_round`.`id`  as `id_SR`,`date`,`id_round`,`id_group_staff`,`survey_of_zone`.`id` as `id_SZ`,`survey_of_zone`.`time` as `time_SZ`,`zone`.`id_zone`,`id_survey_round`,`general_condition`,`distace`,`area`,`name`
+            FROM `survey_round` join `survey_of_zone` 
+                       on (`survey_round`.`id` = `survey_of_zone`.`id_survey_round`) join `zone`
+                       on (`zone`.`id_zone`=`survey_of_zone`.`id_zone`) left join `intruder_group` on (`intruder_group`.`id_survey_of_zone` = `survey_of_zone`.`id`)
+                        WHERE  `zone`.`id_zone` $z '$zone' AND`date` $d '$date' AND `id_round` $r $round AND `id_group_staff` $g '$group'
+                         GROUP BY `survey_of_zone`.`id` HAVING `amountI` $i 0";
+             echo json_encode($this->db->select($sql));
+            //  print_r($this->db->select($sql));
+
         }
         
     }

@@ -25,19 +25,23 @@
                 <div class="card" id = <?php echo $row['id_intruder_group'];?>>
                         <div class="grid-content-detail">
                             <div class="round-detail">
-                           ครั้งที่ <?php echo $i; ?> 
+                           ครั้งที่ : <?php echo $i; ?> 
                             </div>
                             <div class="time-detail">
-                                เวลา <?php echo $row['time']; ?>
+                                เวลา : <?php echo $row['time']; ?>
+                            </div>
+                            <div class="amount-detail">
+                                จำนวน : <?php echo $row['amount']; ?> คน
                             </div>
                             <div class="operation-detail" value=<?php echo $row['operator']; ?>>
-                                การจัดการ <?php echo $row['operator']; ?>
+                                การจัดการ : <?php echo $row['operator']; ?>
                             </div>
                             <div class="list-name-deatail">
-                                รายชื่อ
-                                <?php foreach($this->data as $row2) {
+                                รายชื่อ :
+                                <?php $j = 1; foreach($this->dataList as $row2) {
                                     if($row2['id_intruder_group'] == $statusId)
-                                    echo "<br>".$row2['firstname']." ".$row2['lastname'];
+                                    echo "<br>$j. ".$row2['firstname']." ".$row2['lastname'];
+                                    $j++;
                                 }
                                 ?>
 
@@ -200,7 +204,7 @@
         
     })
     $(document).on('click','#btn-removeIntruder',function(){ // delete condition
-        $(this).parent().parent().parent().children().last().remove();
+        $(this).parent().parent().remove();
         $(this).remove();
     })
     $('input.timepicker').timepicker({

@@ -3,8 +3,8 @@
         public function __construct(){
             parent::__construct();
         }
-        public function insertData($id,$nameG,$nameS){ 
-            $sql = "INSERT INTO `group_staff`(`id_group_staff`,`num`) VALUE('$nameG',3)";
+        public function insertData($nameG,$nameS){ 
+            $sql = "INSERT INTO `group_staff`(`id_group_staff`) VALUE('$nameG')";
             $this->db->insert($sql);
             $sql = "UPDATE `staff` SET `id_group_staff` = '$nameG' WHERE `id_staff` = $nameS[0] OR `id_staff` = $nameS[1] OR `id_staff` = $nameS[2]";
             $this->db->update($sql);

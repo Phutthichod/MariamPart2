@@ -8,7 +8,7 @@ if(isset($_GET['controller'])&&isset($_GET['action'])){
     $action = 'index';
 }
 
-$controllers = array('survey'=>['index','round','detail','insertRound','updateRound','insertSurvey','insertGI','getListIntruder','updateSurvey','updateGI'],'page'=>['index','error'],'group_staff_survey'=>['index','insert','update'],'intruder'=>['index']);
+$controllers = array('survey'=>['getDataOption','index','round','detail','insertRound','updateRound','insertSurvey','insertGI','getListIntruder','updateSurvey','updateGI'],'page'=>['index','error'],'group_staff_survey'=>['index','insert','update'],'intruder'=>['index']);
 function call($controller,$action){
     require_once("app/controllers/".$controller."_controller.php"); 
     $c = new $controller;

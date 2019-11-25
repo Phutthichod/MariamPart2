@@ -17,6 +17,7 @@
         }
         public function detail(){
             $this->view->data = $this->model->getDataDetail($_GET['id']);
+            $this->view->dataList = $this->model->getDataDetailList($_GET['id']);
             $this->view->render('survey','views/survey/detail.php');
         }
         public function insertRound(){
@@ -80,6 +81,14 @@
             $idR = $_POST['idR'];
             $id_zone = $_POST['id_zone'];
             $this->model->updateGI($id_zone,$id,$time,$operation,$fname, $lname, $amountI,$idI,$zone,$idR);
-        } 
+        }
+        public function getDataOption(){
+            $date = $_POST['date'];
+            $round = $_POST['round'];
+            $zone = $_POST['zone'];
+            $group = $_POST['group'];
+            $intruder = $_POST['intruder'];
+            $this->model->getDataOption($date ,$round,$zone,$group,$intruder);
+        }
     }
 ?>

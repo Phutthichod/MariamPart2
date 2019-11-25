@@ -37,7 +37,7 @@
                             
                             if($row['firstname'] == $row2['firstname'] && $row2['lastname'] == $row['lastname']){
                                 if($j != 0) echo " ,";
-                                echo $row2['id_intruder_group'];
+                                echo $row2['name']."  ".$row2['time'];
                                 $j++;
                             }
                         }?>

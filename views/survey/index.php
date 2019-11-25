@@ -12,25 +12,34 @@
     <div class="container">
         <div class="header-mariam"><h1>Survey</h1></div>
         <div class="grid-option">
-            <input class="form-control" type="button" id="datepicker" value="เลือกวันที่" />
-            <select class="custom-select " id="select-zone">
-                <option selected>ทุกรอบ</option>
-                <option value="1">ทุกรอบ</option>
-                <option value="2">รอบที่ 1</option>
-                <option value="3">รอบที่ 2</option>
+            <input class="form-control" type="date" id="select-date-option" disabled  value="เลือกวันที่" />
+            <select class="custom-select " id="select-date">
+                <option value="0" >ทุกวัน</option>
+                <option value="1" >กำหนดวัน</option>
             </select> 
-            <select class="custom-select" id="select-intruder">
-                <option selected>ทุกพื้นที่</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+            <select class="custom-select " id="select-round">
+                <option value="0" selected>ทุกรอบ</option>
+                <?php foreach($this->round as $row) { ?>
+                <option value="<?php echo $row['id'];?>"><?php echo $row['id']; ?></option>
+                <?php } ?>
+            </select> 
+            <select class="custom-select" id="select-zone">
+                <option value="0" selected>ทุกพื้นที่</option>
+                <?php foreach($this->zone as $row) { ?>
+                <option value="<?php echo $row['id_zone'];?>"><?php echo $row['name']; ?></option>
+                <?php } ?>
             </select>
             <select class="custom-select" id="select-intruder">
-                <option selected>ทุกพื้นที่</option>
-                <option value="1">ทุกพื้นที่</option>
-                <option value="2">พื้นที่ถูกบุกรุก</option>
-                <option value="3">พื้นที่ที่ไม่ถูกบุกรุก</option>
-            </select>  
+                <option value=0 selected>ทุกพื้นที่</option>
+                <option value=1>พื้นที่ถูกบุกรุก</option>
+                <option value=2>พื้นที่ที่ไม่ถูกบุกรุก</option>
+            </select>
+            <select class="custom-select" id="select-group">
+                <option value="0" selected>ทุกกลุ่ม</option>
+                <?php foreach($this->staff as $row) { ?>
+                <option value="<?php echo $row['id_group_staff'];?>"><?php echo $row['id_group_staff']; ?></option>
+                <?php } ?>
+            </select>    
             <div></div> <!-- //สร้างหลอกไว้ -->
             <button class="btn btn-info">5 item</button>
             <div class="insert">
@@ -48,7 +57,7 @@
                         วันที่ <?php echo $row['date']; ?> 
                     </div>
                     <div class="time click" value="<?php echo $row['time']; ?>">
-                        เวลา <?php echo $row['time']; ?><span> 
+                        เวลา <?php echo $row['time_SZ']; ?><span> 
                     </div>
                     <div class="grid-GR">    
                         <div class="round click">
@@ -60,7 +69,7 @@
                     </div>
                    
                     <div class="intruder">
-                        ถูกบุกรุก 0 ครั้ง
+                        ถูกบุกรุก <?php echo $row['amountI']; ?> ครั้ง
                     </div>
                     <div class="edit">
                        <button id_SZ="<?php echo $row['id_SZ']; ?>" id_SR="<?php echo $row['id_SR']; ?>" class="btn btn-warning btn-edit" data-toggle="modal" data-target="#updateModal">แก้ไข</button>
@@ -233,7 +242,7 @@
                 $(this).parent().children().first().css("color","white");
             }
         );
-        $("#datepicker" ).datepicker();
+        // $("#datepicker" ).datepicker();
         $("input[name=time],input[name=time-edit]").timepicker({
             timeFormat: 'H:mm p',
             interval: 60,
@@ -256,6 +265,76 @@
             $('#select6').children().first().val($(this).parent().parent().children().next().next().next().children().first().next().children().attr('id'));
             $('input[name=date-edit]').val($(this).parent().parent().children().first().next().attr('value'));
             $('input[name=time-edit]').val($(this).parent().parent().children().first().next().next().attr('value'));
+        })
+
+        let status_option;
+        $('#select-date,#select-date-option,#select-round,#select-zone,#select-intruder,#select-group').change(function(){
+            let date = $('#select-date-option').val()
+            if($('#select-date').val() == 0) date = '0'
+            let round = $('#select-round').val()
+            let zone = $('#select-zone').val()
+            let intruder = $('#select-intruder').val()
+            let group = $('#select-group').val()
+
+            console.log(round+"    "+zone+"    "+group+"    "+date)
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+              console.log(this.responseText);
+              let data = JSON.parse(this.responseText)
+              let text = ''
+              for(i in data){
+                text+=`
+                <div class="card ">
+                <div class="grid-body grid-card">
+                    <div class="zone click" id=${data[i].id_zone}>
+                            ${data[i].name}
+                    </div>
+                    <div class="date click" value="${data[i].date}">
+                        วันที่ ${data[i].date} 
+                    </div>
+                    <div class="time click" value="${data[i].time_SZ} ">
+                        เวลา ${data[i].time_SZ}<span> 
+                    </div>
+                    <div class="grid-GR">    
+                        <div class="round click">
+                            <span id =${data[i].id_round} >รอบที่ ${data[i].id_round} 
+                        </div>
+                        <div class="group click">
+                            <span id = ${data[i].id_group_staff} >กลุ่ม ${data[i].id_group_staff} <span>
+                        </div>
+                    </div>
+                   
+                    <div class="intruder">
+                        ถูกบุกรุก${data[i].amountI} ครั้ง
+                    </div>
+                    <div class="edit">
+                       <button id_SZ="${data[i].id_SZ}" id_SR="${data[i].id_SR}" class="btn btn-warning btn-edit" data-toggle="modal" data-target="#updateModal">แก้ไข</button>
+                    </div>
+                    <div class="delete">
+                        <button class="btn btn-danger">ลบ</button>
+                    </div>
+                    <div class="detail">
+                        <button class="btn btn-info"><a href="?controller=survey&action=detail&zone=${data[i].name}&idRound=${data[i].id_round}&id=${data[i].id_SZ}">
+                        รายละเอียด</a></button>
+                    </div>
+                </div>
+                
+            </div>
+                
+                `
+              }
+              $('.grid-content').html(text);
+            }
+            
+        }
+        xhttp.open("POST", `?controller=survey&action=getDataOption`, false);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(`date=${date}&round=${round}&zone=${zone}&intruder=${intruder}&group=${group}`);
+        })
+        $('#select-date').change(function(){
+            if($(this).val() == 0) $('#select-date-option').prop('disabled',true);
+            else $('#select-date-option').prop('disabled',false);
         })
     </script>
 </script>
